@@ -1,0 +1,19 @@
+stage: dev
+ingress:  
+  enabled: true
+  className: "traefik"
+  hosts:
+    - host: example-dev.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+opaqueSecret: bm94dHVhRGV2U2VjcmV0
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http

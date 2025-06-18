@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-html
+  labels:
+    {{- include "staticapp.labels" . | nindent 4 }}
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+      <head><title>{{ .Values.stage | upper }} SITE</title></head>
+      <body style="font-family:monospace;text-align:center;margin-top:40vh;">
+        <h1>Hello World, I am on {{ .Values.stage }}.</h1>
+        <p>And this is my <span style="color:tomato;">SECRET_MESSAGE</span>.</p>
+      </body>
+    </html>
