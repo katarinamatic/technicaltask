@@ -1,5 +1,14 @@
 # technicaltask
 
+## Task
+* Deploy a Traefik server
+* That points to a second pod that serves a static site (could be nginx) two stages, dev and prod
+* the static website should show a Text that is injected as an environment variable that is a secret
+    i.e. Hello World i am on [dev/prod]. and this is my [secret]. 
+* should be served https with self-signed
+* should use Kubernetes and helm, on a public git repo
+* bootstrapping scripts using a mini-kube, or similar are preferred 
+
 ## Prerequisites
 * [minikube](https://minikube.sigs.k8s.io/docs/start)
 * [helm](https://helm.sh/docs/intro/install/)
@@ -44,12 +53,6 @@ and add the output to /etc/hosts
 ```
 For macOS M1, add 127.0.0.1 instead of <minikube_ip> 
 
-## Task and assumptions
-* Deploy a Traefik server
-* That points to a second pod that serves a static site (could be nginx) two stages, dev and prod
-* the static website should show a Text that is injected as an environment variable that is a secret
-    i.e. Hello World i am on [dev/prod]. and this is my [secret]. 
-* should be served https with self-signed
-* should use Kubernetes and helm, on a public git repo
-* bootstrapping scripts using a mini-kube, or similar are preferred 
-
+## Assumptions
+* since there is a helm chart for Traefik as a k8s Ingress controller, it was deployed that way. It could be deployed like nginx was (using deployment, service, configmap resources), but since the task needs the service exposed, this seemed more appropriate
+* the secret that is injected as an environment variable was placed in values-<stage>.yaml assuming that there will be testing and maybe the tester would like to make sure the value changes, even though providing opaque secrets in values is not secure (sealed-secrets-controller could be used to generate secrets that would be safe to push to git) 
