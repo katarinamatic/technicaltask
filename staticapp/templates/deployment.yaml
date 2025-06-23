@@ -67,9 +67,7 @@ spec:
             - -c
             - >-
                 cp /original/index.html /workdir/index.html &&
-                sed -i 's/SECRET_MESSAGE/'$REPLACE_VALUE'/g' /workdir/index.html &&
-                cat /workdir/index.html &&
-                ls /workdir
+                sed -i 's/SECRET_MESSAGE/'$REPLACE_VALUE'/g' /workdir/index.html 
           env:
           - name: REPLACE_VALUE
             valueFrom:

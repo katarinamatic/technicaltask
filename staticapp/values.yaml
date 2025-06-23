@@ -104,4 +104,5 @@ tolerations: []
 
 affinity: {}
 
+# opaque secret value, this value is shown in staticapp page
 opaqueSecret: ""

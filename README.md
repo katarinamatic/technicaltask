@@ -54,5 +54,6 @@ and add the output to /etc/hosts
 For macOS M1, add 127.0.0.1 instead of <minikube_ip> 
 
 ## Assumptions
-* since there is a helm chart for Traefik as a k8s Ingress controller, it was deployed that way. It could be deployed like nginx was (using deployment, service, configmap resources), but since the task needs the service exposed, this seemed more appropriate
-* the secret that is injected as an environment variable was placed in values-<stage>.yaml assuming that there will be testing and maybe the tester would like to make sure the value changes, even though providing opaque secrets in values is not secure (sealed-secrets-controller could be used to generate secrets that would be safe to push to git) 
+* latest versions of minikube (Kubernetes), helm
+* since there is a helm chart for Traefik as a k8s Ingress controller, it was deployed that way. It could be deployed in other ways but since the task needs the service exposed, this seemed appropriate
+* the secret that is injected as an environment variable was placed in values-_stage_.yaml assuming that there will be testing and maybe the tester would like to make sure the value changes, even though providing opaque secrets in values is not secure (sealed-secrets-controller could be used to generate secrets that would be safe to push to git, or external Key Management Store could be used) 
