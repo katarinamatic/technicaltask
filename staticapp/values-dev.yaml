@@ -7,6 +7,14 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
+  tls:
+   - hosts:
+      - example-dev.local
+     secretName: tls-cert
+
+  annotations:
+   traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+
 opaqueSecret: bm94dHVhRGV2U2VjcmV0
 
 livenessProbe:
