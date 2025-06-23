@@ -10,7 +10,7 @@ staticapp/                  # helm chart directory
 ├── templates/
 │   ├── lets-encrypt/       # letsencrypt issuer and cert templates
 │   │   ├── ...
-│   ├── selfsigned/         # selfsigned issuer and cert templates
+│   ├── self-signed/         # selfsigned issuer and cert templates
 │   │   ├── ...
 │   └──  ...                # static app templates
 ├── README.md
@@ -44,4 +44,12 @@ and add the output to /etc/hosts
 ```
 For macOS M1, add 127.0.0.1 instead of <minikube_ip> 
 
+## Task and assumptions
+* Deploy a Traefik server
+* That points to a second pod that serves a static site (could be nginx) two stages, dev and prod
+* the static website should show a Text that is injected as an environment variable that is a secret
+    i.e. Hello World i am on [dev/prod]. and this is my [secret]. 
+* should be served https with self-signed
+* should use Kubernetes and helm, on a public git repo
+* bootstrapping scripts using a mini-kube, or similar are preferred 
 
