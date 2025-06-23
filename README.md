@@ -53,6 +53,11 @@ and add the output to /etc/hosts
 ```
 For macOS M1, add 127.0.0.1 instead of <minikube_ip> 
 
+After testing, remove the added lines in /etc/hosts and run:
+```
+minikube delete
+```
+
 ## Assumptions
 * latest versions of minikube (Kubernetes), helm
 * since there is a helm chart for Traefik as a k8s Ingress controller, it was deployed that way. It could be deployed in other ways but since the task needs the service exposed, this seemed appropriate
