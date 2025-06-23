@@ -1,0 +1,15 @@
+{{- if and .Values.ingress.enabled .Values.ingress.letsencrypt }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: letsencrypt-ca
+spec:
+  commonName: letsencrypt-ca
+  secretName: letsencrypt-issuer-account-key
+  dnsNames:
+    - {{ .Values.ingress.host }}
+  issuerRef:
+    kind: Issuer
+    name: ca-issuer
+    group: cert-manager.io
+{{- end }}

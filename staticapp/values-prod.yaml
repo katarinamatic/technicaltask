@@ -1,14 +1,11 @@
 stage: prod
+
 ingress:  
   enabled: true
-  className: "traefik"
-  hosts:
-    - host: example-prod.local
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-opaqueSecret: bm94dHVhUHJvZFNlY3JldA==
+  letsencrypt: false
+  host: example-prod.local
 
+opaqueSecret: bm94dHVhUHJvZFNlY3JldA==
 
 livenessProbe:
   httpGet:

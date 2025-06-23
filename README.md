@@ -1,32 +1,47 @@
 # technicaltask
 
-minikube start
+## Prerequisites
+* [minikube](https://minikube.sigs.k8s.io/docs/start)
+* [helm](https://helm.sh/docs/intro/install/)
 
+## Repository structure
+```text
+staticapp/                  # helm chart directory
+├── templates/
+│   ├── lets-encrypt/       # letsencrypt issuer and cert templates
+│   │   ├── ...
+│   ├── selfsigned/         # selfsigned issuer and cert templates
+│   │   ├── ...
+│   └──  ...                # static app templates
+├── README.md
+├── setup_cluster.sh        # starts minikube cluster and installs k8s controllers (Traefik, cert-manager)
+└── install_stages.sh       # releases prod and dev stages to minikube cluster using helm
+```
 
-helm repo add traefik https://traefik.github.io/charts
-helm repo update
-
-kubectl create ns traefik-v2
-helm install --namespace=traefik-v2 traefik traefik/traefik
-
-helm install --create-namespace --namespace dev  bla staticapp -f staticapp/values-dev.yaml
-helm install --create-namespace --namespace prod  bla staticapp -f staticapp/values-prod.yaml
-
-sudo vim /etc/hosts
--> 
-127.0.0.1   example-dev.local
-127.0.0.1   example-prod.local
-
+## Run task
+Set up the minikube cluster by running:
+```
+bash ./setup_cluster.sh
+```
+Install dev and prod stage to minikube cluster by running:
+```
+bash ./install_stages.sh
+```
+Run [minikube tunnel](https://minikube.sigs.k8s.io/docs/commands/tunnel/) to be able to reach the stages on https://example-dev.local and https://example-prod.local:
+```
 minikube tunnel
+```
+If services are still unreachable, run:
+```
+minikube ip
+```
+and add the output to /etc/hosts
+```
+...
+<minikube_ip>  example-dev.local
+<minikube_ip>  example-prod.local
+...
+```
+For macOS M1, add 127.0.0.1 instead of <minikube_ip> 
 
 
-
-# generate self signed
-- generate key
-openssl genrsa -out tls.key 2048
-- generate cert signing req
-openssl req -new -key tls.key -out tls.csr -subj "/CN=*.local"
-- generate self signed cert
-openssl x509 -req -days 365 -in tls.csr -signkey tls.key -out tls.crt
-- store in secret
-kubectl create secret -n dev tls my-certificate --cert=tls.crt --key=tls.key

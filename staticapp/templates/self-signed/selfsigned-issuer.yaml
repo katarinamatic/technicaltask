@@ -1,0 +1,9 @@
+{{- if and .Values.ingress.enabled (not .Values.ingress.letsencrypt) }}
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: selfsigned
+spec:
+  selfSigned: {}
+
+{{- end }}

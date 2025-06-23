@@ -1,0 +1,23 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ include "staticapp.fullname" . }}
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`{{.Values.ingress.host}}`)
+      kind: Rule
+      services:
+        - name: {{ include "staticapp.fullname" $ }}
+          port: {{ .Values.service.port }}
+      middlewares:
+        - name: https-redirectscheme
+  tls:
+    {{- if .Values.ingress.letsencrypt}}
+    secretName: letsencrypt-ca
+    {{- else }}
+    secretName: {{.Values.ingress.host}}
+    {{- end }}
+{{- end }}
