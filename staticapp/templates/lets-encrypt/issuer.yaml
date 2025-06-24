@@ -2,15 +2,16 @@
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
-  name: letsencrypt-ca-issuer
+  name: pebble-issuer
 spec:
   acme:
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    skipTLSVerify: true
+    server: https://pebble.pebble/dir
     privateKeySecretRef:
-      name: letsencrypt-issuer-account-key
+      name: pk-pebble-issuer
     solvers:
-      - http01:
+      - selector:
+        http01:
           ingress:
-            serviceType: ClusterIP
-            ingressClassName: traefik
+            class: traefik
 {{- end }}

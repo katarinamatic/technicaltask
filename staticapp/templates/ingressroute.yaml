@@ -3,10 +3,17 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: {{ include "staticapp.fullname" . }}
+  annotations:
+    acme.cert-manager.io/http01-edit-in-place: "true"
 spec:
   entryPoints:
     - websecure
   routes:
+    - match: Host(`{{.Values.ingress.host}}`) && PathPrefix(`.well-known/acme-challenge`)
+      kind: Rule
+      services:
+        - name: pebble.pebble
+          port: https
     - match: Host(`{{.Values.ingress.host}}`)
       kind: Rule
       services:
@@ -16,7 +23,7 @@ spec:
         - name: https-redirectscheme
   tls:
     {{- if .Values.ingress.letsencrypt}}
-    secretName: letsencrypt-ca
+    secretName: letsencrypt-ca-secret
     {{- else }}
     secretName: {{.Values.ingress.host}}
     {{- end }}

@@ -6,4 +6,5 @@ metadata:
 spec:
   redirectScheme:
     scheme: https
+    permanent: true
 {{- end }}

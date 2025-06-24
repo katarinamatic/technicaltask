@@ -2,7 +2,7 @@ stage: dev
 
 ingress:  
   enabled: true
-  letsencrypt: false
+  letsencrypt: true
   host: example-dev.local
 
 opaqueSecret: bm94dHVhRGV2U2VjcmV0
